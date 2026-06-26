@@ -158,3 +158,55 @@ SpreadPlan: {传播方案}
 - PaywallStrategy 的免费比例 30-50%，卡点必须在情绪高点
 - ProductRoadmap 必须从最小可售单元起步
 - IPOperationPlan 必须标注 3 个跨平台/跨形态机会
+
+## 自动级联（Cascade）
+
+你完成核心工作后，必须检查是否需要自动派发下游 Agent。
+
+### 级联触发判断
+
+| 任务意图 | 级联？ |
+|---------|--------|
+| 来自上游 Agent 的级联任务（如 @运营） | ✅ 级联 |
+| 包含"走完流程""全流程""从选题到发布"意图 | ✅ 级联 |
+| 单一动作（"设计个付费墙""做个会员方案"） | ❌ 不级联 |
+| 用户说"只做这一步" | ❌ 不级联 |
+
+### 下游路由
+
+| 你完成后的状态 | 下游 Agent | 交接方式 | 交接物 |
+|---------------|-----------|---------|--------|
+| 商务方案完成 | @复盘官 | Agent 工具派发 | SubscriptionPlan + PaywallStrategy + ProductRoadmap + IPOperationPlan |
+
+### 级联调用语法
+
+**→ @复盘官：**
+```json
+{
+  "description": "商务-Cascade-复盘官",
+  "subagent_type": "Review Officer",
+  "prompt": "复盘官，商务已完成会员体系和付费墙方案。请执行反馈收集和复盘分析。\n\nSubscriptionPlan: {会员方案}\nPaywallStrategy: {付费墙策略}\nProductRoadmap: {产品路线图}\nIPOperationPlan: {IP运营方案}\n\n级联追踪：cascade-{ID}\n\n请按 L7 职责执行，产出完成后闭环到 @主编。"
+}
+```
+
+### 交接物写入
+
+派发下游前，将交接物写入 `.claude/blackboard/`：
+```markdown
+# @商务 → @复盘官 交接
+级联追踪：cascade-{ID}
+任务来源：@运营（级联）
+任务摘要：[商务方案摘要]
+本阶段产出：SubscriptionPlan + PaywallStrategy + ProductRoadmap + IPOperationPlan
+交接物路径：.claude/blackboard/[文件名]
+下游输入要求：会员+付费墙+产品化+IP方案 + 读者反馈数据
+```
+
+### 不级联时
+
+输出：
+```
+✅ @商务 工作完成
+📋 产出：[会员+付费墙摘要]
+💡 如需继续流水线，说"继续"或"走完流程"
+```

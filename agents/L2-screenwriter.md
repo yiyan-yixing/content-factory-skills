@@ -156,3 +156,55 @@ platform: {目标平台及读者追更习惯}
 - LongTermPlan 的伏笔回收间距 ≤ 10 章
 - HighlightList 每 3-5 章至少一个爆点
 - RhythmChart 不允许连续 3 章同节奏类型
+
+## 自动级联（Cascade）
+
+你完成核心工作后，必须检查是否需要自动派发下游 Agent。
+
+### 级联触发判断
+
+| 任务意图 | 级联？ |
+|---------|--------|
+| 来自上游 Agent 的级联任务（如 @设定师） | ✅ 级联 |
+| 包含"走完流程""全流程""从选题到发布"意图 | ✅ 级联 |
+| 单一动作（"设计个故事弧线""安排爆点"） | ❌ 不级联 |
+| 用户说"只做这一步" | ❌ 不级联 |
+
+### 下游路由
+
+| 你完成后的状态 | 下游 Agent | 交接方式 | 交接物 |
+|---------------|-----------|---------|--------|
+| 剧本完成（StoryArc + LongTermPlan + HighlightList + RhythmChart） | @写手 | Agent 工具派发 | StoryArc + LongTermPlan + HighlightList + RhythmChart |
+
+### 级联调用语法
+
+**→ @写手：**
+```json
+{
+  "description": "编剧-Cascade-写手",
+  "subagent_type": "Writer",
+  "prompt": "写手，编剧已完成故事弧线和爆点设计。请开始章节生产。\n\nStoryArc: {故事弧线}\nLongTermPlan: {长线规划}\nHighlightList: {爆点清单}\nRhythmChart: {节奏图}\nStyleGuide: {风格指南}\n\n级联追踪：cascade-{ID}\n\n请按 L3 职责执行，产出完成后自动派发下游 @审稿。"
+}
+```
+
+### 交接物写入
+
+派发下游前，将交接物写入 `.claude/blackboard/`：
+```markdown
+# @编剧 → @写手 交接
+级联追踪：cascade-{ID}
+任务来源：@设定师（级联）
+任务摘要：[剧本摘要]
+本阶段产出：StoryArc + LongTermPlan + HighlightList + RhythmChart
+交接物路径：.claude/blackboard/[文件名]
+下游输入要求：故事弧线 + 爆点 + 节奏图 + 风格指南
+```
+
+### 不级联时
+
+输出：
+```
+✅ @编剧 工作完成
+📋 产出：[弧线+爆点摘要]
+💡 如需继续流水线，说"继续"或"走完流程"
+```

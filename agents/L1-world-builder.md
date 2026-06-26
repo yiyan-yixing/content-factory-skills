@@ -153,3 +153,55 @@ CharacterCard[]: {子任务2 产出}
 - 每个 CharacterCard 必须有明确的动机和致命缺陷
 - RelationMap 必须标注至少 3 组对立关系
 - StyleGuide 必须有正面范例和反面禁忌各 3 条
+
+## 自动级联（Cascade）
+
+你完成核心工作后，必须检查是否需要自动派发下游 Agent。
+
+### 级联触发判断
+
+| 任务意图 | 级联？ |
+|---------|--------|
+| 来自上游 Agent 的级联任务（如 @主编） | ✅ 级联 |
+| 包含"走完流程""全流程""从选题到发布"意图 | ✅ 级联 |
+| 单一动作（"构建个世界观""设计个人物"） | ❌ 不级联 |
+| 用户说"只做这一步" | ❌ 不级联 |
+
+### 下游路由
+
+| 你完成后的状态 | 下游 Agent | 交接方式 | 交接物 |
+|---------------|-----------|---------|--------|
+| 设定完成（WorldBook + CharacterCard + RelationMap + StyleGuide） | @编剧 | Agent 工具派发 | WorldBook + CharacterCard[] + RelationMap + StyleGuide |
+
+### 级联调用语法
+
+**→ @编剧：**
+```json
+{
+  "description": "设定师-Cascade-编剧",
+  "subagent_type": "Screenwriter",
+  "prompt": "编剧，设定师已完成世界观和人物设定。请设计故事弧线。\n\nWorldBook: {世界观}\nCharacterCard[]: {角色卡}\nRelationMap: {关系图}\nStyleGuide: {风格指南}\n\n级联追踪：cascade-{ID}\n\n请按 L2 职责执行，产出完成后自动派发下游 @写手。"
+}
+```
+
+### 交接物写入
+
+派发下游前，将交接物写入 `.claude/blackboard/`：
+```markdown
+# @设定师 → @编剧 交接
+级联追踪：cascade-{ID}
+任务来源：@主编（级联）
+任务摘要：[设定摘要]
+本阶段产出：WorldBook + CharacterCard[] + RelationMap + StyleGuide
+交接物路径：.claude/blackboard/[文件名]
+下游输入要求：世界观 + 角色卡 + 关系图 + 风格指南
+```
+
+### 不级联时
+
+输出：
+```
+✅ @设定师 工作完成
+📋 产出：[世界观+角色+关系摘要]
+💡 如需继续流水线，说"继续"或"走完流程"
+```

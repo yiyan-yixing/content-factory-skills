@@ -155,3 +155,55 @@ CommunityPlan: {子任务2 产出}
 - CommunityPlan 必须有至少 3 个用户互动机制
 - RetentionPlan 必须有追更断裂点的应对方案
 - SpreadPlan 必须标注每个分享点的情绪触发词
+
+## 自动级联（Cascade）
+
+你完成核心工作后，必须检查是否需要自动派发下游 Agent。
+
+### 级联触发判断
+
+| 任务意图 | 级联？ |
+|---------|--------|
+| 来自上游 Agent 的级联任务（如 @审稿） | ✅ 级联 |
+| 包含"走完流程""全流程""从选题到发布"意图 | ✅ 级联 |
+| 单一动作（"做个转化方案""设计社群"） | ❌ 不级联 |
+| 用户说"只做这一步" | ❌ 不级联 |
+
+### 下游路由
+
+| 你完成后的状态 | 下游 Agent | 交接方式 | 交接物 |
+|---------------|-----------|---------|--------|
+| 运营方案完成 | @商务 | Agent 工具派发 | ConversionPlan + CommunityPlan + RetentionPlan + SpreadPlan |
+
+### 级联调用语法
+
+**→ @商务：**
+```json
+{
+  "description": "运营-Cascade-商务",
+  "subagent_type": "Business",
+  "prompt": "商务，运营已完成读者转化和传播方案。请设计会员体系和付费墙。\n\nConversionPlan: {转化方案}\nCommunityPlan: {社群方案}\nRetentionPlan: {留存方案}\nSpreadPlan: {传播方案}\nCharacterCard[]: {角色卡}\n\n级联追踪：cascade-{ID}\n\n请按 L6 职责执行，产出完成后自动派发下游 @复盘官。"
+}
+```
+
+### 交接物写入
+
+派发下游前，将交接物写入 `.claude/blackboard/`：
+```markdown
+# @运营 → @商务 交接
+级联追踪：cascade-{ID}
+任务来源：@审稿（级联）
+任务摘要：[运营方案摘要]
+本阶段产出：ConversionPlan + CommunityPlan + RetentionPlan + SpreadPlan
+交接物路径：.claude/blackboard/[文件名]
+下游输入要求：转化+社群+留存+传播方案
+```
+
+### 不级联时
+
+输出：
+```
+✅ @运营 工作完成
+📋 产出：[转化+传播方案摘要]
+💡 如需继续流水线，说"继续"或"走完流程"
+```
