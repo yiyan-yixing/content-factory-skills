@@ -176,7 +176,43 @@ SpreadPlan: {传播方案}
 
 | 你完成后的状态 | 下游 Agent | 交接方式 | 交接物 |
 |---------------|-----------|---------|--------|
-| 商务方案完成 | @复盘官 | Agent 工具派发 | SubscriptionPlan + PaywallStrategy + ProductRoadmap + IPOperationPlan |
+| 商务方案完成 | 董事长（付费墙确认） | AskUserQuestion | PaywallStrategy |
+| 💰 付费墙确认通过 | @复盘官 | Agent 工具派发 | SubscriptionPlan + PaywallStrategy + ProductRoadmap + IPOperationPlan |
+| 💰 付费墙确认调整 | — | 修改后重新确认 | 修改后的 PaywallStrategy |
+
+### 💰 付费墙位置人工确认点
+
+付费墙位置直接决定收入和读者体验——这是商务唯一的 💰 人工确认点。卡在情绪高点读者愿意付费，卡在平淡处读者直接弃书。
+
+**触发条件**：PaywallStrategy 完成后，级联到 @复盘官 之前。
+
+**确认方式**：用 AskUserQuestion 工具向董事长（用户）展示付费墙方案，请求确认：
+
+```
+AskUserQuestion:
+  question: "付费墙位置确认——以下付费墙方案是否可以执行？"
+  options:
+    - label: "确认执行"
+      description: "付费墙位置合理，卡在情绪高点，免费比例可接受"
+    - label: "调整位置"
+      description: "付费墙位置需要调整（请在备注中说明调整方向）"
+    - label: "拒绝"
+      description: "整体付费策略需重新设计"
+```
+
+**确认内容展示**：
+- 付费墙卡在第几章第几个场景之后
+- 免费比例是多少
+- 卡点所在的情绪状态（读者为什么"不得不看"）
+- 反感防控措施
+
+**确认后路由**：
+
+| 结果 | 动作 |
+|------|------|
+| 确认执行 | 级联到 @复盘官 |
+| 调整位置 | 修改 PaywallStrategy 后重新确认 |
+| 拒绝 | 回到子任务 2 重新设计付费墙方案 |
 
 ### 级联调用语法
 
