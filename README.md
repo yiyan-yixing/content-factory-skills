@@ -91,13 +91,19 @@ content-factory-skills/          # 仓库根目录
 │
 ├── evals/                       #   效果评估体系
 ├── profiles/                    #   垂直落地配置包
-│   └── web-novel-factory/       #     网文工厂
+│   ├── web-novel-factory/       #     网文工厂
+│   └── passive-income-factory/  #     被动收入工厂
 ├── examples/                    #   使用示例
-│   └── novel-writing-flow.md    #     小说创作全流程
+│   ├── novel-writing-flow.md    #     小说创作全流程
+│   └── passive-income-flow.md   #     被动收入长青文全流程
+│
+├── docs/                        #   文档
+│   └── passive-income-blueprint.md  # 被动赚钱方案（完整操作手册）
 │
 ├── CLAUDE.md.template           #   记忆入口模板
 ├── install.sh                   #   一键安装脚本
-└── init.sh                      #   交互式初始化脚本
+├── init.sh                      #   交互式初始化脚本
+└── quickstart-passive-income.sh #   被动收入快速启动脚本
 ```
 
 ### 安装后的用户项目结构
@@ -113,10 +119,12 @@ your-project/
     │   └── recall/             #     历史会话
     ├── blackboard/             #   共享白板
     ├── evals/                  #   效果评估体系
-    ├── examples/               #   使用示例
     ├── profiles/               #   垂直落地配置
+    ├── examples/               #   使用示例
+    ├── docs/                   #   操作文档
     ├── CLAUDE.md               #   记忆入口 (@import core)
-    └── init.sh                 #   初始化脚本
+    ├── init.sh                 #   初始化脚本
+    └── quickstart.sh           #   快速启动（选择 Profile 时生成）
 ```
 
 ---
@@ -336,6 +344,7 @@ SKILL-701 ──→ SKILL-702 ──→ SKILL-703 ──→ SKILL-704
 通用框架 + 垂直落地配置包。`profiles/` 下提供针对特定内容场景的具体化参考：
 
 - `profiles/web-novel-factory/` — **网文工厂**：起点/番茄/晋江连载，日更模式，付费墙+IP孵化
+- `profiles/passive-income-factory/` — **被动收入工厂**：5 平台分发长青文+付费专栏+带货+数字产品，7 条被动收入管道
 
 做自媒体短文/剧本/漫画脚本可仿照此结构做自己的 profile。
 
@@ -361,6 +370,7 @@ CC BY-SA 4.0 — 欢迎借鉴，请注明出处
 
 ## 版本
 
+- V0.5 — 2026-07-13 — 被动收入工厂：完整操作手册 + Profile + 快速启动脚本 + docs/ 安装
 - V0.4 — 2026-06-18 — 补齐基础设施：memory/blackboard/evals/profiles/install.sh/init.sh/WORKFLOW.md/质疑协议
 - V0.3 — 2026-06-18 — 角色重命名：主编/设定师/编剧/写手/审稿/运营/商务/复盘官
 - V0.2 — 2026-06-17 — 31 技能 × 8 层 × 完整闭环

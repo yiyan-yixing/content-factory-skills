@@ -1,0 +1,44 @@
+# 被动收入工厂 — 记忆入口
+
+> 此文件加载 core 记忆到每个 session，所有 Agent 共享。
+
+@.claude/memory/core/tech-stack.md
+@.claude/memory/core/architecture.md
+@.claude/memory/core/project-context.md
+
+## 记忆使用规则
+
+- **core/** — 每个 session 自动加载，只放最关键信息（≤200 行总计）
+- **archival/** — Agent 需要时用 Read 读取，不放 core 避免膨胀
+- **recall/** — 历史会话摘要，按需检索
+
+## Agent 协作规则
+
+- 所有 Agent 产出写入 `.claude/blackboard/`
+- 质疑按 `.claude/agents/challenge-protocol.md` 执行
+- 架构决策写入 `.claude/memory/core/architecture.md` 并归档到 `archival/decisions/`
+- 经验教训写入 `.claude/memory/archival/lessons/`
+
+## 被动收入工厂特化规则
+
+- **选题必须 SEO 验证**：所有选题用 5118/百度指数确认搜索量，不写无人搜索的内容
+- **一鱼多吃强制**：每篇内容必须产出 5 平台版本（公众号/头条/知乎/小红书/抖音）
+- **私域引流**：所有平台内容末尾引流到公众号+知识星球
+- **数据驱动**：每周复盘搜索排名+转化率+收益，不靠直觉
+- **长青优先**：只做搜索型长青选题（生命周期 > 6 个月），不追一次性热点
+- **种草自然**：带货植入必须基于真实使用场景，P0 级禁止硬广
+
+## 技能路由
+
+- 选题验证 → @主编 + 5118 API
+- 长青文写作 → @写手 SKILL-303
+- 跨平台改写 → 5118 智能改写 API / KAWO Auto-Format
+- 付费专栏设计 → @商务 SKILL-601/602
+- 带货选品 → @运营 SKILL-501 + 抖音精选联盟/小红书蒲公英
+- 数字产品打包 → @商务 SKILL-603 + 面包多
+- 搜索排名追踪 → @复盘官 SKILL-701 + 5118 排名监控
+
+## 完整方案参考
+
+- 被动赚钱操作手册：`docs/passive-income-blueprint.md`
+- 示例流程：`examples/passive-income-flow.md`

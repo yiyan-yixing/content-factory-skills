@@ -64,14 +64,50 @@ echo "   ✅ 8 个 Agent + WORKFLOW + 质疑协议"
 # ─── Step 4: 安装记忆系统 + 白板 + 评估 + CLAUDE.md ───
 echo "🧠 [4/5] 安装记忆系统 + 白板 + 评估体系..."
 
+# 询问 Profile（如果有多个）
+SELECTED_PROFILE=""
+if [ -d "$CLONE_DIR/profiles" ]; then
+  AVAILABLE_PROFILES=($(ls -d "$CLONE_DIR"/profiles/*/ 2>/dev/null | xargs -I{} basename {}))
+  if [ ${#AVAILABLE_PROFILES[@]} -gt 0 ]; then
+    echo ""
+    echo "📋 可用的垂直 Profile："
+    echo "   0) 通用（默认，不选 Profile）"
+    PROFILE_IDX=1
+    for p in "${AVAILABLE_PROFILES[@]}"; do
+      echo "   $PROFILE_IDX) $p"
+      PROFILE_IDX=$((PROFILE_IDX + 1))
+    done
+    echo ""
+    read -p "请选择 Profile [0-$((PROFILE_IDX-1))]（默认 0）: " profile_choice
+    profile_choice=${profile_choice:-0}
+    if [ "$profile_choice" != "0" ] && [ "$profile_choice" -le "$((PROFILE_IDX-1))" ] 2>/dev/null; then
+      SELECTED_PROFILE="${AVAILABLE_PROFILES[$((profile_choice-1))]}"
+      echo "   ✅ 已选择 Profile: $SELECTED_PROFILE"
+    else
+      echo "   ✅ 使用通用配置"
+    fi
+  fi
+fi
+
 # 记忆系统
 mkdir -p .claude/memory/core .claude/memory/archival/decisions .claude/memory/archival/lessons .claude/memory/archival/user-research .claude/memory/recall
-if [ -d "$CLONE_DIR/memory/core" ]; then
-  cp "$CLONE_DIR"/memory/core/* .claude/memory/core/ 2>/dev/null || true
+
+# 如果选择了 Profile，优先使用 Profile 的记忆模板
+if [ -n "$SELECTED_PROFILE" ] && [ -d "$CLONE_DIR/profiles/$SELECTED_PROFILE/memory/core" ]; then
+  cp "$CLONE_DIR"/profiles/$SELECTED_PROFILE/memory/core/* .claude/memory/core/ 2>/dev/null || true
+  echo "   ✅ 记忆系统 (core from profile: $SELECTED_PROFILE + archival + recall)"
+else
+  if [ -d "$CLONE_DIR/memory/core" ]; then
+    cp "$CLONE_DIR"/memory/core/* .claude/memory/core/ 2>/dev/null || true
+    echo "   ✅ 记忆系统 (core + archival + recall)"
+  fi
+fi
+
+# archival（始终使用通用版）
+if [ -d "$CLONE_DIR/memory/archival" ]; then
   cp "$CLONE_DIR"/memory/archival/decisions/* .claude/memory/archival/decisions/ 2>/dev/null || true
   cp "$CLONE_DIR"/memory/archival/lessons/* .claude/memory/archival/lessons/ 2>/dev/null || true
   cp "$CLONE_DIR"/memory/archival/user-research/* .claude/memory/archival/user-research/ 2>/dev/null || true
-  echo "   ✅ 记忆系统 (core + archival + recall)"
 fi
 
 # 共享白板
@@ -95,8 +131,11 @@ if [ -d "$CLONE_DIR/profiles" ]; then
   echo "   ✅ 垂直 profile（参考配置）"
 fi
 
-# CLAUDE.md
-if [ -f "$CLONE_DIR/CLAUDE.md.template" ]; then
+# CLAUDE.md（优先使用 Profile 的模板）
+if [ -n "$SELECTED_PROFILE" ] && [ -f "$CLONE_DIR/profiles/$SELECTED_PROFILE/CLAUDE.md.template" ]; then
+  cp "$CLONE_DIR"/profiles/$SELECTED_PROFILE/CLAUDE.md.template .claude/CLAUDE.md
+  echo "   ✅ CLAUDE.md (from profile: $SELECTED_PROFILE)"
+elif [ -f "$CLONE_DIR/CLAUDE.md.template" ]; then
   cp "$CLONE_DIR"/CLAUDE.md.template .claude/CLAUDE.md
   echo "   ✅ CLAUDE.md (记忆入口)"
 fi
@@ -109,11 +148,27 @@ if [ -f "$CLONE_DIR/init.sh" ]; then
   echo "   ✅ init.sh (交互式初始化)"
 fi
 
-# 使用示例
+# 使用示例 + 文档
 if [ -d "$CLONE_DIR/examples" ]; then
   mkdir -p .claude/examples
   cp -r "$CLONE_DIR"/examples/* .claude/examples/ 2>/dev/null || true
   echo "   ✅ 使用示例"
+fi
+if [ -d "$CLONE_DIR/docs" ]; then
+  mkdir -p .claude/docs
+  cp -r "$CLONE_DIR"/docs/* .claude/docs/ 2>/dev/null || true
+  echo "   ✅ 操作文档"
+fi
+
+# 快速启动脚本（按 Profile 选择）
+if [ -n "$SELECTED_PROFILE" ] && [ -f "$CLONE_DIR/quickstart-$SELECTED_PROFILE.sh" ]; then
+  cp "$CLONE_DIR"/quickstart-$SELECTED_PROFILE.sh .claude/quickstart.sh
+  chmod +x .claude/quickstart.sh
+  echo "   ✅ 快速启动脚本 (profile: $SELECTED_PROFILE)"
+elif [ -f "$CLONE_DIR/quickstart-passive-income.sh" ]; then
+  cp "$CLONE_DIR"/quickstart-passive-income.sh .claude/quickstart-passive-income.sh
+  chmod +x .claude/quickstart-passive-income.sh
+  echo "   ✅ 被动收入快速启动脚本"
 fi
 
 # 清理临时目录（本地仓库不删）
@@ -130,9 +185,14 @@ echo "  .claude/agents/        — 8 个 Agent + WORKFLOW + 质疑协议"
 echo "  .claude/memory/        — 三层记忆系统 (core + archival + recall)"
 echo "  .claude/blackboard/    — 共享白板 (4 个文件)"
 echo "  .claude/evals/         — 效果评估体系"
+echo "  .claude/profiles/      — 垂直 profile（参考配置）"
 echo "  .claude/examples/      — 使用示例"
+echo "  .claude/docs/          — 操作文档"
 echo "  .claude/CLAUDE.md      — 记忆入口 (@import core)"
 echo "  .claude/init.sh        — 交互式初始化脚本"
+if [ -n "$SELECTED_PROFILE" ]; then
+  echo "  .claude/quickstart.sh  — 快速启动 ($SELECTED_PROFILE)"
+fi
 echo ""
 
 # ─── Step 6: 自动初始化（非 --skip-init 时） ───
@@ -142,8 +202,30 @@ if [ -z "$SKIP_INIT" ] && [ -f ".claude/init.sh" ]; then
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   echo ""
   bash .claude/init.sh
+fi
+
+# ─── 被动收入 Profile 提示 ───
+if [ "$SELECTED_PROFILE" = "passive-income-factory" ]; then
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "💰 被动收入工厂已就绪！"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  echo "快速启动（3 分钟配置）："
+  echo "  bash .claude/quickstart.sh"
+  echo ""
+  echo "或直接在 Claude Code 中："
+  echo "  @主编 帮我验证一个长青文选题"
+  echo ""
+  echo "📖 完整手册: .claude/docs/passive-income-blueprint.md"
+  echo "📖 示例流程: .claude/examples/passive-income-flow.md"
 else
-  echo "下一步："
-  echo "  1. 运行 bash .claude/init.sh 初始化你的内容工厂信息"
-  echo "  2. 启动 Claude Code，输入 @主编 定义第一个内容选题"
+  if [ -z "$SKIP_INIT" ]; then
+    :
+  else
+    echo ""
+    echo "下一步："
+    echo "  1. 运行 bash .claude/init.sh 初始化你的内容工厂信息"
+    echo "  2. 启动 Claude Code，输入 @主编 定义第一个内容选题"
+  fi
 fi
