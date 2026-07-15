@@ -48,7 +48,7 @@ cd "$TARGET_DIR"
 mkdir -p .claude/skills
 if [ -d "$CLONE_DIR/skills" ]; then
   cp -r "$CLONE_DIR"/skills/* .claude/skills/ 2>/dev/null || true
-  echo "   ✅ 31 个 Skills"
+  echo "   ✅ 35 个 Skills"
 fi
 
 # ─── Step 3: 安装 Agents ───
@@ -59,7 +59,7 @@ for agent_file in "$CLONE_DIR"/agents/*.md; do
     cp "$agent_file" .claude/agents/
   fi
 done
-echo "   ✅ 8 个 Agent + WORKFLOW + 质疑协议"
+echo "   ✅ 9 个 Agent + WORKFLOW + 质疑协议"
 
 # ─── Step 4: 安装记忆系统 + 白板 + 评估 + CLAUDE.md ───
 echo "🧠 [4/5] 安装记忆系统 + 白板 + 评估体系..."
@@ -180,8 +180,8 @@ echo ""
 echo "🎉 安装完成！"
 echo ""
 echo "已安装内容："
-echo "  .claude/skills/        — 31 个 Skills"
-echo "  .claude/agents/        — 8 个 Agent + WORKFLOW + 质疑协议"
+echo "  .claude/skills/        — 35 个 Skills"
+echo "  .claude/agents/        — 9 个 Agent + WORKFLOW + 质疑协议"
 echo "  .claude/memory/        — 三层记忆系统 (core + archival + recall)"
 echo "  .claude/blackboard/    — 共享白板 (4 个文件)"
 echo "  .claude/evals/         — 效果评估体系"

@@ -14,9 +14,9 @@
 
 ## Agent 协作规则
 
-- 核心闭环：战略 → 设定 → 剧本 → 生产 → 审稿 → 运营 → 商务 → 复盘，详见 `.claude/agents/WORKFLOW.md`
+- 核心闭环：战略 → 设定 → 剧本 → 生产 → 审稿 → 运营 → 发行 → 商务 → 复盘，详见 `.claude/agents/WORKFLOW.md`
 - 所有 Agent 产出写入 `.claude/blackboard/`
 - 质疑按 `.claude/agents/challenge-protocol.md` 执行
 - 架构决策写入 `.claude/memory/core/architecture.md` 并归档到 `archival/decisions/`
 - 经验教训写入 `.claude/memory/archival/lessons/`
-- 标准配置 8 层：主编(L0) / 设定师(L1) / 编剧(L2) / 写手(L3) / 审稿(L4) / 运营(L5) / 商务(L6) / 复盘官(L7)
+- 标准配置 9 层：主编(L0) / 设定师(L1) / 编剧(L2) / 写手(L3) / 审稿(L4) / 运营(L5) / 发行官(L5b) / 商务(L6) / 复盘官(L7)
