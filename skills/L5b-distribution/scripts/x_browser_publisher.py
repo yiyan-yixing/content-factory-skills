@@ -13,6 +13,7 @@ Prerequisites:
 """
 
 import logging
+import os
 import time
 
 from browser_cdp_base import BrowserCDPPublisher, TYPE_DELAY_MS, POST_WAIT_MS
@@ -24,7 +25,12 @@ from publisher import (
 
 logger = logging.getLogger(__name__)
 
-COMPOSE_URL = "https://x.com/compose/post"
+# Configurable URLs — override via environment variables
+X_BASE_URL = os.environ.get("X_BASE_URL", "https://x.com")
+X_PROFILE_HANDLE = os.environ.get("X_PROFILE_HANDLE", "1yan1xing")
+COMPOSE_URL = f"{X_BASE_URL}/compose/post"
+# Derived hostname for auth-check string matching (e.g. "x.com" or "twitter.com")
+_X_HOST = X_BASE_URL.replace("https://", "").replace("http://", "").rstrip("/")
 
 
 class XBrowserPublisher(BrowserCDPPublisher):
@@ -36,7 +42,7 @@ class XBrowserPublisher(BrowserCDPPublisher):
     """
 
     platform_name = "x-browser"
-    platform_url = "https://x.com/home"
+    platform_url = f"{X_BASE_URL}/home"
     compose_url = COMPOSE_URL
 
     def check_auth(self) -> bool:
@@ -45,9 +51,9 @@ class XBrowserPublisher(BrowserCDPPublisher):
             pw, browser, page = None, None, None
             try:
                 pw, browser, page = self._connect()
-                page.goto("https://x.com/home", timeout=15000)
+                page.goto(f"{X_BASE_URL}/home", timeout=15000)
                 page.wait_for_timeout(2000)
-                logged_in = "x.com/home" in page.url or "x.com" in page.url
+                logged_in = f"{_X_HOST}/home" in page.url or _X_HOST in page.url
                 return logged_in
             except Exception as e:
                 logger.warning("CDP auth check failed: %s", str(e)[:100])
@@ -151,7 +157,8 @@ class XBrowserPublisher(BrowserCDPPublisher):
             self._wait_after_submit(page)
 
             # Get posted tweet URL from profile
-            page.goto("https://x.com/1yan1xing", timeout=15000)
+            profile_url = f"{X_BASE_URL}/{X_PROFILE_HANDLE}"
+            page.goto(profile_url, timeout=15000)
             page.wait_for_timeout(3000)
 
             first_tweet_el = page.locator('[data-testid="tweetText"]').first
@@ -160,7 +167,7 @@ class XBrowserPublisher(BrowserCDPPublisher):
                 if tweet_link.is_visible(timeout=3000):
                     href = tweet_link.get_attribute("href")
                     if href:
-                        posted_urls.append(f"https://x.com{href}" if href.startswith("/") else href)
+                        posted_urls.append(f"{X_BASE_URL}{href}" if href.startswith("/") else href)
                         logger.info("Tweet 1 posted: %s", posted_urls[-1])
 
             # Post remaining tweets as replies

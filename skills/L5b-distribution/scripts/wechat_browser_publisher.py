@@ -51,6 +51,12 @@ WECHAT_ADMIN_URL = "https://mp.weixin.qq.com"
 DISTRIBUTION_DIR = CONTENT_ROOT / "distribution" / "wechat"
 
 
+def _redact_token(url: str) -> str:
+    """Redact token parameter from a URL for safe logging."""
+    import re
+    return re.sub(r'token=\d+', 'token=****', url)
+
+
 class WechatBrowserPublisher(BrowserCDPPublisher):
     """Publisher for WeChat Official Account using Playwright CDP.
 
@@ -137,7 +143,7 @@ class WechatBrowserPublisher(BrowserCDPPublisher):
             result["details"] = (
                 f"Draft saved for article {article_id} on WeChat. "
                 f"Title: '{title}'. "
-                f"⚠️ Publishing requires human phone confirmation — "
+                f"Publishing requires human phone confirmation — "
                 f"open WeChat admin to confirm."
             )
         else:
@@ -172,10 +178,10 @@ class WechatBrowserPublisher(BrowserCDPPublisher):
             current_url = page.url
             token_match = re.search(r'token=(\d+)', current_url)
             if not token_match:
-                logger.error("Could not extract token from WeChat URL: %s", current_url)
+                logger.error("Could not extract token from WeChat URL: %s", _redact_token(current_url))
                 return None
             token = token_match.group(1)
-            logger.info("Extracted WeChat token: %s", token)
+            logger.info("Extracted WeChat token: ****%s", token[-4:] if len(token) > 4 else "***")
 
             # Step 2: Navigate to 草稿箱 (draft box) page
             draft_url = (
@@ -183,7 +189,7 @@ class WechatBrowserPublisher(BrowserCDPPublisher):
                 f"begin=0&count=10&type=77&action=list_card&"
                 f"token={token}&lang=zh_CN"
             )
-            logger.info("Navigating to 草稿箱: %s", draft_url)
+            logger.info("Navigating to 草稿箱: %s", _redact_token(draft_url))
             page.goto(draft_url, timeout=20000)
             page.wait_for_timeout(3000)
 
@@ -215,7 +221,7 @@ class WechatBrowserPublisher(BrowserCDPPublisher):
                         return None
 
                     page = editor_page
-                    logger.info("Switched to editor page: %s", page.url)
+                    logger.info("Switched to editor page: %s", _redact_token(page.url))
                     page.wait_for_timeout(3000)
                 else:
                     logger.error("文章 option not found in dropdown")
@@ -276,12 +282,11 @@ class WechatBrowserPublisher(BrowserCDPPublisher):
             page.wait_for_timeout(2000)
             current_url = page.url
             if "appmsg_edit" in current_url:
-                import re
                 id_match = re.search(r'appmsgid=(\d+)', current_url)
                 if id_match:
                     draft_id = id_match.group(1)
                 else:
-                    draft_id = current_url
+                    draft_id = "saved"
                 logger.info("Draft saved: %s", draft_id)
 
         except Exception as e:

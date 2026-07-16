@@ -23,6 +23,7 @@ Flow:
 """
 
 import logging
+import os
 import time
 
 from browser_cdp_base import BrowserCDPPublisher, TYPE_DELAY_MS, POST_WAIT_MS
@@ -34,8 +35,10 @@ from publisher import (
 
 logger = logging.getLogger(__name__)
 
-# Default publication URL — override via constructor or env
-DEFAULT_PUBLICATION_URL = "https://1234366449.substack.com"
+# Configurable publication URL — override via constructor or env
+DEFAULT_PUBLICATION_URL = os.environ.get(
+    "SUBSTACK_PUBLICATION_URL", "https://1234366449.substack.com"
+)
 
 
 class SubstackBrowserPublisher(BrowserCDPPublisher):
@@ -158,7 +161,7 @@ class SubstackBrowserPublisher(BrowserCDPPublisher):
             # Verify we're on the editor page
             title_check = page.locator('textarea[placeholder="Title"]').first
             if not title_check.is_visible(timeout=5000):
-                logger.info("Direct editor URL didn't work, trying Create→Article flow...")
+                logger.info("Direct editor URL didn't work, trying Create->Article flow...")
                 page.goto(self._publication_url, timeout=20000)
                 page.wait_for_timeout(3000)
 
