@@ -48,7 +48,15 @@ cd "$TARGET_DIR"
 mkdir -p .claude/skills
 if [ -d "$CLONE_DIR/skills" ]; then
   cp -r "$CLONE_DIR"/skills/* .claude/skills/ 2>/dev/null || true
-  echo "   ✅ 35 个 Skills"
+  echo "   ✅ 46 个 Skills"
+fi
+
+# ─── Step 2.5: 安装脚本 ───
+echo "⚙️  [2.5/5] 安装脚本到 scripts/..."
+if [ -d "$CLONE_DIR/scripts" ]; then
+  mkdir -p scripts
+  cp -r "$CLONE_DIR"/scripts/* scripts/ 2>/dev/null || true
+  echo "   ✅ $(find "$CLONE_DIR/scripts" -name '*.py' | wc -l | tr -d ' ') 个 Python 脚本"
 fi
 
 # ─── Step 3: 安装 Agents ───
@@ -59,7 +67,7 @@ for agent_file in "$CLONE_DIR"/agents/*.md; do
     cp "$agent_file" .claude/agents/
   fi
 done
-echo "   ✅ 9 个 Agent + WORKFLOW + 质疑协议"
+echo "   ✅ 10 个 Agent + WORKFLOW + 质疑协议"
 
 # ─── Step 4: 安装记忆系统 + 白板 + 评估 + CLAUDE.md ───
 echo "🧠 [4/5] 安装记忆系统 + 白板 + 评估体系..."
@@ -180,8 +188,8 @@ echo ""
 echo "🎉 安装完成！"
 echo ""
 echo "已安装内容："
-echo "  .claude/skills/        — 35 个 Skills"
-echo "  .claude/agents/        — 9 个 Agent + WORKFLOW + 质疑协议"
+echo "  .claude/skills/        — 46 个 Skills（含8个技术文章写作技能+配图规划）"
+echo "  .claude/agents/        — 10 个 Agent + WORKFLOW + 质疑协议"
 echo "  .claude/memory/        — 三层记忆系统 (core + archival + recall)"
 echo "  .claude/blackboard/    — 共享白板 (4 个文件)"
 echo "  .claude/evals/         — 效果评估体系"
