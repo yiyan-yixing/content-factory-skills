@@ -210,7 +210,7 @@ biz/content/pipeline/product/{product-id}/
 典型工作流:
 
 ```
-@content-chief-editor 确认选题
+@head-of-content 确认选题
      │
      ▼
 SKILL-603: 输出产品规格
