@@ -1,7 +1,7 @@
 ---
-name: "Content WeChat Writing / 公众号写作"
-description: "公众号文章从选题到发布的完整写作流程。结构优先，信息密度高，适配手机快读场景。当用户说'写一篇公众号''公众号文章''写一篇关于xx的文章'时触发。"
-when_to_use: "需要写公众号文章时；用户说'写一篇公众号文章''公众号发文''写一篇关于X的文章''公众号选题'时触发。频次：on-demand，时间盒：完整流程30-45min"
+name: "content-wechat-writing"
+description: "写一篇结构优先、信息密度高、适配手机快读的公众号长文（标题→概要→六节叙事链→CTA，含三的法则/每段≤3句/400-600字配图/第一手资料核验）。当用户要把任何话题、热点、事件或观点写成一篇完整文章时务必用本技能——无论说'写篇公众号''公众号文章''写一篇关于X的文章''深度分析''长文''这个热点能不能写''帮我把这事写成文''出个推文长文'，还是只丢一个主题让我展开成文。Claude 自己凭感觉写公众号容易结构松散、废话多、手机端读不动、缺第一手来源；本技能提供实战沉淀的六节骨骼、信息密度自检、配图节奏与真实性清单，是公众号写作的唯一规范入口。"
+when_to_use: "频次：on-demand，时间盒：完整流程30-45min（触发条件见 description）"
 allowed-tools:
   - Read
   - Write
@@ -9,7 +9,6 @@ allowed-tools:
   - WebSearch
   - Agent
   - Bash
-disable-model-invocation: true
 version: "1.0.0"
 skill_id: "SKILL-606"
 layer: "L3-生产层"

@@ -57,7 +57,7 @@
 
 ---
 
-## L1 设定师
+## 设定师
 
 ### 1. 世界观（SKILL-101）
 
@@ -202,7 +202,7 @@ Ch1《工位》3000字
 
 ---
 
-## L4 审稿
+## 审稿
 
 ### 结构审查（SKILL-401）
 
@@ -240,7 +240,7 @@ Ch1-5 节奏检查：
 
 ---
 
-## L5 运营
+## 运营
 
 ### 读者转化（SKILL-501）
 
@@ -283,7 +283,7 @@ Ch1-5 节奏检查：
 
 ---
 
-## L6 商务
+## 商务
 
 ### 会员设计（SKILL-601）
 
@@ -324,7 +324,7 @@ Ch1-5 节奏检查：
 
 ---
 
-## L7 复盘官
+## 复盘官
 
 ### 反馈收集（SKILL-701）
 
@@ -405,5 +405,5 @@ L3 写手 增加闺蜜互动场景
 | L3 | SceneCard[], DialogueDraft[], ChapterDraft[], FinalChapter[] | `project/L3-production/` |
 | L4 | StructureReport, ConsistencyReport | `project/L4-optimization/` |
 | L5 | ConversionPlan, CommunityPlan, RetentionPlan, SpreadPlan | `project/L5-growth/` |
-| L6 | SubscriptionPlan, PaywallStrategy, ProductRoadmap, IPOperationPlan | `project/L6-business/` |
+| L6 | SubscriptionPlan, PaywallStrategy, ProductRoadmap, IPOperationPlan | `project/business/` |
 | L7 | FeedbackDB, ReviewBook, SkillVersion[], KnowledgeBase | `project/L7-learning/` |

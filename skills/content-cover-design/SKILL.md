@@ -1,5 +1,5 @@
 ---
-name: "Content Cover Design / 封面图设计"
+name: "content-cover-design"
 description: "根据文章标题和核心数据自动设计封面方案。当用户说'封面设计''cover design''做封面''封面方案'时触发。"
 when_to_use: "需要设计封面图方案时；用户说'做封面''封面设计''cover''封面方案'时触发。频次：on-demand，时间盒：10min"
 allowed-tools:

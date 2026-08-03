@@ -1,5 +1,5 @@
 ---
-name: "Content PPT Generation / PPT生成"
+name: "content-ppt-gen"
 description: "将 Markdown 内容自动生成 PowerPoint 演示文稿。支持技术演讲、商务方案、旅行分享、课程课件等场景。"
 when_to_use: "需要制作 PPT 时；用户说'做个PPT''生成演示文稿''做个deck'时触发。频次：on-demand，时间盒：30min"
 allowed-tools:

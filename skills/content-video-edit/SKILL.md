@@ -1,5 +1,5 @@
 ---
-name: "Content Video Edit / 视频剪辑"
+name: "content-video-edit"
 description: "用ffmpeg/moviepy将分镜素材合成为完整短视频，支持TTS配音/BGM/字幕烧录。当用户说'剪辑视频''合成视频''moviepy''视频编辑'时触发。"
 when_to_use: "需要剪辑视频时；用户说'剪辑视频''合成视频''moviepy剪辑''视频制作''配音''BGM'时触发。频次：on-demand，时间盒：20-30min"
 allowed-tools:

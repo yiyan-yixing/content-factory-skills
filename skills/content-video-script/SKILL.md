@@ -1,5 +1,5 @@
 ---
-name: "Content Video Script / 短视频脚本"
+name: "content-video-script"
 description: "将文章内容拆解为30-90秒短视频分镜脚本。当用户说'视频脚本''分镜''短视频脚本''script'时触发。"
 when_to_use: "需要编写短视频脚本时；用户说'写视频脚本''分镜脚本''短视频script''做视频'时触发。频次：on-demand，时间盒：15min"
 allowed-tools:

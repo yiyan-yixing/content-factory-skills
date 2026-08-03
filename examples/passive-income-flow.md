@@ -51,7 +51,7 @@
 
 ---
 
-## L1 设定师
+## 设定师
 
 ### 1. 作者人设（替代网文的"世界观"）
 
@@ -206,7 +206,7 @@ H2 小标题含长尾词：
 
 ---
 
-## L4 审稿
+## 审稿
 
 ### SEO 审查
 
@@ -240,7 +240,7 @@ P1: Claude 推荐段落可以加一个"不适合"的场景，增强真实感
 
 ---
 
-## L5 运营
+## 运营
 
 ### 搜索流量转化
 
@@ -263,7 +263,7 @@ P1: Claude 推荐段落可以加一个"不适合"的场景，增强真实感
 
 ---
 
-## L6 商务
+## 商务
 
 ### 付费墙设计
 
@@ -289,7 +289,7 @@ Prompt 模板包 → 面包多 19.9 元（抽成 5%）
 
 ---
 
-## L7 复盘官
+## 复盘官
 
 ### 反馈收集
 
@@ -366,5 +366,5 @@ L2 下一批选题加入"小红书爆款方法论"系列
 | L3 | ArticleDraft, XiaohongshuCards[], DouyinScript | `project/L3-production/` |
 | L4 | SEOAuditReport, AffiliateAuditReport | `project/L4-optimization/` |
 | L5 | SearchConversionPlan, PrivateDomainPlan | `project/L5-growth/` |
-| L6 | PaywallPlan, AffiliatePlan | `project/L6-business/` |
+| L6 | PaywallPlan, AffiliatePlan | `project/business/` |
 | L7 | PerformanceMetrics, OptimizationRules | `project/L7-learning/` |

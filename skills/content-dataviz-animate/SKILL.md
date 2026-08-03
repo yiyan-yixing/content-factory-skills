@@ -1,5 +1,5 @@
 ---
-name: "Content DataViz Animate / 数据可视化动画"
+name: "content-dataviz-animate"
 description: "用matplotlib动画将数据可视化转为mp4视频，支持柱状图生长、饼图展开等动画效果。当用户说'数据动画''动画图表''animate matplotlib''数据视频'时触发。"
 when_to_use: "需要生成数据可视化动画时；用户说'数据动画''动画图表''matplotlib动画''数据视频'时触发。频次：on-demand，时间盒：15min"
 allowed-tools:

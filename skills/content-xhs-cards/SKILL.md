@@ -1,12 +1,11 @@
 ---
-name: "Content XHS Cards / 小红书图文卡片组"
-description: "生成3-6张小红书图文卡片，每张3:4竖版图文一体。当用户说'小红书卡片''图文卡片''XHS卡片''slide cards'时触发。"
+name: "content-xhs-cards"
+description: "生成3-6张小红书图文卡片（3:4竖版图文一体：封面大字钩子+内容数据图+CTA关注卡）。当用户想把文章、笔记或数据做成小红书可滑动的竖版图文、提到'小红书卡片''图文卡片''XHS卡片''slide cards''做成几张图''竖版卡片''卡片组''拆成图文'，或任何要把内容拆成多张3:4配图发布的意图时，务必使用本技能——即使用户没明说'卡片'二字。Claude 单凭自己排版难以保证小红书信息流缩略图的文字可读性、品牌色板统一和卡片结构规范，本技能提供专用卡片结构、品牌色板与 xhs_card_composer.py 渲染脚本，是小红书图文生产的唯一入口。"
 when_to_use: "需要生成小红书图文卡片组时；用户说'小红书卡片''图文卡片''XHS卡片''slide cards''做卡片'时触发。频次：on-demand，时间盒：15min"
 allowed-tools:
   - Read
   - Write
   - Bash
-disable-model-invocation: true
 version: "1.0.0"
 skill_id: "SKILL-356"
 layer: "L3.5-视觉生产层"

@@ -2,7 +2,7 @@
 
 **[English](./README_EN.md)** | 中文
 
-> Claude Code 技能集合 — 内容工厂 9 层角色 Agent + 35 个核心技能 + 三层记忆 + 协作白板 + 质疑协议。
+> Claude Code 技能集合 — 内容工厂 11 角色 Agent + 35 个核心技能 + 三层记忆 + 协作白板 + 质疑协议。
 > 专为「用最少人数跑通 **战略 → 设定 → 生产 → 发行 → 复盘** 闭环」的内容团队打造。标准 `.claude/` 格式。
 
 ## 30 秒上手
@@ -16,8 +16,8 @@ curl -fsSL https://raw.githubusercontent.com/yiyan-yixing/content-factory-skills
 
 # 3. 启动 Claude Code，你的内容工厂已就绪
 claude
-@主编 帮我定第一部作品的选题和目标读者
-@设定师 构建世界观和人物
+@head-of-content 帮我定第一部作品的选题和目标读者
+@world-builder 构建世界观和人物
 ```
 
 > 🎯 安装完成后，你将拥有：9 层 Agent 角色、35 个技能、三层记忆系统、共享白板、质疑协议 — 一家完整的内容生产工厂框架。
@@ -25,23 +25,23 @@ claude
 ## 架构
 
 ```
-L0 战略层（3 技能）   用户画像 → 情绪洞察 → 市场选题
+战略层（3 技能）   用户画像 → 情绪洞察 → 市场选题
        ↓
-L1 设定层（4 技能）   世界观 → 人物 → 关系 → 风格
+设定层（4 技能）   世界观 → 人物 → 关系 → 风格
        ↓
-L2 剧本层（4 技能）   故事 → 长线 → 爆点 → 连载节奏
+剧本层（4 技能）   故事 → 长线 → 爆点 → 连载节奏
        ↓
-L3 生产层（4 技能）   场景 → 对话 → 章节 → 文风统一
+生产层（4 技能）   场景 → 对话 → 章节 → 文风统一
        ↓
-L4 审稿层（4 技能）   结构审查 → 情绪强化 → 节奏优化 → 一致性检查
+审稿层（4 技能）   结构审查 → 情绪强化 → 节奏优化 → 一致性检查
        ↓
-L5 运营层（4 技能）   读者转化 → 社群 → 留存 → 传播
+运营层（4 技能）   读者转化 → 社群 → 留存 → 传播
        ↓
 L5b 发行层（4 技能）  X 浏览器发布 → Substack 发布 → 知乎发布 → 微信发布
        ↓
-L6 商务层（4 技能）   会员 → 付费墙 → 产品化 → IP运营
+商务层（4 技能）   会员 → 付费墙 → 产品化 → IP运营
        ↓
-L7 复盘层（4 技能）   反馈收集 → 复盘 → 技能优化 → 经验沉淀
+复盘层（4 技能）   反馈收集 → 复盘 → 技能优化 → 经验沉淀
        ↓
                   反馈闭环 → 回到 L0
 ```
@@ -60,21 +60,24 @@ content-factory-skills/          # 仓库根目录
 │   ├── L4-optimization/         #     审稿层（4 技能）
 │   ├── L5-growth/               #     运营层（4 技能）
 │   ├── L5b-distribution/        #     发行层（4 技能）
-│   ├── L6-business/             #     商务层（4 技能）
+│   ├── business/             #     商务层（4 技能）
 │   └── L7-learning/             #     复盘层（4 技能）
 │
-├── agents/                      #   9 层角色子代理（通过 @角色名 调用）
-│   ├── L0-chief-editor.md       #     主编
-│   ├── L1-world-builder.md      #     设定师
-│   ├── L2-screenwriter.md       #     编剧
-│   ├── L3-writer.md             #     写手
-│   ├── L4-reviewer.md           #     审稿
-│   ├── L5-operator.md           #     运营
-│   ├── L5b-distributor.md       #     发行官
-│   ├── L6-business.md           #     商务
-│   ├── L7-review-officer.md     #     复盘官
-│   ├── WORKFLOW.md              #     内容闭环 DAG 流程
-│   └── challenge-protocol.md   #     质疑协议
+├── agents/                      #   11 角色子代理（通过 @角色名 调用）
+│   ├── head-of-content.md       #     主编（品类路由入口）
+│   ├── world-builder.md         #     设定师
+│   ├── story-architect.md       #     编剧
+│   ├── writer.md                #     写手
+│   ├── illustrator.md           #     配图
+│   ├── video-editor.md          #     视频生产
+│   ├── reviewer.md              #     审稿
+│   ├── operator.md              #     运营
+│   ├── distributor.md           #     发行
+│   ├── business.md              #     商务
+│   ├── retro-officer.md         #     复盘
+│   ├── content-ppt-editor.md    #     PPT 演示文稿
+│   ├── WORKFLOW.md              #     5 品类条件 DAG 流程
+│   └── challenge-protocol.md    #     质疑协议
 │
 ├── memory/                      #   三层记忆系统
 │   ├── core/                    #     常驻记忆（每 session 加载）
@@ -192,22 +195,22 @@ COMPANY_NAME="我的工作室" CONTENT_DIRECTION="都市成长小说" TARGET_REA
 
 | 角色 | 调用 | 核心使命 | 负责技能 |
 |------|------|----------|----------|
-| **主编** | `@主编` | 决定写给谁、写什么、打什么情绪 | 用户画像、情绪洞察、市场选题 |
-| **设定师** | `@设定师` | 构建世界观、人物、关系、风格 | 世界观构建、人物设计、角色关系、风格指南 |
-| **编剧** | `@编剧` | 设计故事、埋伏笔、设爆点、控节奏 | 故事设计、长线规划、爆点设计、连载节奏 |
-| **写手** | `@写手` | 场景、对话、章节、文风落地 | 场景设计、对话写作、章节生成、文风统一 |
-| **审稿** | `@审稿` | 结构审查、情绪强化、节奏、一致性 | 结构审查、情绪强化、节奏优化、一致性检查 |
-| **运营** | `@运营` | 读者转化、社群、留存、传播 | 读者转化、社群设计、留存设计、传播设计 |
-| **商务** | `@商务` | 会员、付费墙、产品化、IP运营 | 会员设计、付费墙设计、产品化、IP运营 |
-| **复盘官** | `@复盘官` | 反馈收集、复盘、技能优化、经验沉淀 | 反馈收集、内容复盘、技能优化、经验沉淀 |
+| **主编** | `@head-of-content` | 决定写给谁、写什么、打什么情绪 | 用户画像、情绪洞察、市场选题 |
+| **设定师** | `@world-builder` | 构建世界观、人物、关系、风格 | 世界观构建、人物设计、角色关系、风格指南 |
+| **编剧** | `@story-architect` | 设计故事、埋伏笔、设爆点、控节奏 | 故事设计、长线规划、爆点设计、连载节奏 |
+| **写手** | `@writer` | 场景、对话、章节、文风落地 | 场景设计、对话写作、章节生成、文风统一 |
+| **审稿** | `@reviewer` | 结构审查、情绪强化、节奏、一致性 | 结构审查、情绪强化、节奏优化、一致性检查 |
+| **运营** | `@operator` | 读者转化、社群、留存、传播 | 读者转化、社群设计、留存设计、传播设计 |
+| **商务** | `@business` | 会员、付费墙、产品化、IP运营 | 会员设计、付费墙设计、产品化、IP运营 |
+| **复盘官** | `@retro-officer` | 反馈收集、复盘、技能优化、经验沉淀 | 反馈收集、内容复盘、技能优化、经验沉淀 |
 
 ### 内容闭环流程
 
 ```
-@主编 定义画像+选题 → @设定师 构建设定 → @编剧 设计故事 → @写手 生产章节
-  → @审稿 审查优化 → @运营 推向读者 → @商务 商业变现 → @复盘官 闭环反馈
+@head-of-content 定义画像+选题 → @world-builder 构建设定 → @story-architect 设计故事 → @writer 生产章节
+  → @reviewer 审查优化 → @operator 推向读者 → @business 商业变现 → @retro-officer 闭环反馈
                                                                     ↓
-                           @主编 战略校准 ← @复盘官 复盘报告 ←─────┘
+                           @head-of-content 战略校准 ← @retro-officer 复盘报告 ←─────┘
 ```
 
 详见 `agents/WORKFLOW.md`。
@@ -218,34 +221,34 @@ COMPANY_NAME="我的工作室" CONTENT_DIRECTION="都市成长小说" TARGET_REA
 
 | 层级 | 智能体 | 技能 | SKILL ID |
 |------|--------|------|----------|
-| L0 战略 | 主编 | 用户画像 | SKILL-001 |
+| 战略 | 主编 | 用户画像 | SKILL-001 |
 | | | 情绪洞察 | SKILL-002 |
 | | | 市场选题 | SKILL-003 |
-| L1 设定 | 设定师 | 世界观构建 | SKILL-101 |
+| 设定 | 设定师 | 世界观构建 | SKILL-101 |
 | | | 人物设计 | SKILL-102 |
 | | | 角色关系 | SKILL-103 |
 | | | 风格指南 | SKILL-104 |
-| L2 剧本 | 编剧 | 故事设计 | SKILL-201 |
+| 剧本 | 编剧 | 故事设计 | SKILL-201 |
 | | | 长线规划 | SKILL-202 |
 | | | 爆点设计 | SKILL-203 |
 | | | 连载节奏 | SKILL-204 |
-| L3 生产 | 写手 | 场景设计 | SKILL-301 |
+| 生产 | 写手 | 场景设计 | SKILL-301 |
 | | | 对话写作 | SKILL-302 |
 | | | 章节生成 | SKILL-303 |
 | | | 文风统一 | SKILL-304 |
-| L4 审稿 | 审稿 | 结构审查 | SKILL-401 |
+| 审稿 | 审稿 | 结构审查 | SKILL-401 |
 | | | 情绪强化 | SKILL-402 |
 | | | 节奏优化 | SKILL-403 |
 | | | 一致性检查 | SKILL-404 |
-| L5 运营 | 运营 | 读者转化 | SKILL-501 |
+| 运营 | 运营 | 读者转化 | SKILL-501 |
 | | | 社群设计 | SKILL-502 |
 | | | 留存设计 | SKILL-503 |
 | | | 传播设计 | SKILL-504 |
-| L6 商务 | 商务 | 会员设计 | SKILL-601 |
+| 商务 | 商务 | 会员设计 | SKILL-601 |
 | | | 付费墙设计 | SKILL-602 |
 | | | 产品化 | SKILL-603 |
 | | | IP 运营 | SKILL-604 |
-| L7 复盘 | 复盘官 | 反馈收集 | SKILL-701 |
+| 复盘 | 复盘官 | 反馈收集 | SKILL-701 |
 | | | 内容复盘 | SKILL-702 |
 | | | 技能优化 | SKILL-703 |
 | | | 经验沉淀 | SKILL-704 |
@@ -257,11 +260,11 @@ COMPANY_NAME="我的工作室" CONTENT_DIRECTION="都市成长小说" TARGET_REA
 > 内容工厂铁律：没有可发布的章节，就没有读者。
 
 ```
-Day 1:   @主编 定画像+选题 + @设定师 出世界观+人物
-Day 2:   @设定师 出关系+风格 + @编剧 出故事弧线+爆点
-Day 3-4: @写手 批量产章节（5-10 章）
-Day 5:   @审稿 全链路审查 + @运营 出转化+传播方案
-Day 6-7: @商务 出付费墙+会员 + 发布上线 + 开始收集反馈
+Day 1:   @head-of-content 定画像+选题 + @world-builder 出世界观+人物
+Day 2:   @world-builder 出关系+风格 + @story-architect 出故事弧线+爆点
+Day 3-4: @writer 批量产章节（5-10 章）
+Day 5:   @reviewer 全链路审查 + @operator 出转化+传播方案
+Day 6-7: @business 出付费墙+会员 + 发布上线 + 开始收集反馈
 ```
 
 详见 `agents/WORKFLOW.md` 的快速出作品流程。
@@ -328,16 +331,16 @@ SKILL-701 ──→ SKILL-702 ──→ SKILL-703 ──→ SKILL-704
 
 | 文件 | 用途 | 维护者 |
 |------|------|--------|
-| `.claude/blackboard/current-sprint.md` | 当前迭代目标、任务分配、进度 | @主编 |
+| `.claude/blackboard/current-sprint.md` | 当前迭代目标、任务分配、进度 | @head-of-content |
 | `.claude/blackboard/open-questions.md` | 待解决问题 | 任何 Agent |
 | `.claude/blackboard/challenges.md` | 质疑记录 | 协调者 |
-| `.claude/blackboard/decisions-log.md` | 决策日志索引 | @主编 |
+| `.claude/blackboard/decisions-log.md` | 决策日志索引 | @head-of-content |
 
 ## 质疑协议
 
-@主编 出选题 → @设定师 质疑设定可行性 + @编剧 质疑故事可展开性
-@写手 出章节 → @审稿 质疑一致性和情绪强度
-@商务 出付费墙 → @运营 质疑读者体验
+@head-of-content 出选题 → @world-builder 质疑设定可行性 + @story-architect 质疑故事可展开性
+@writer 出章节 → @reviewer 质疑一致性和情绪强度
+@business 出付费墙 → @operator 质疑读者体验
 
 详见 `agents/challenge-protocol.md`。
 

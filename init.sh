@@ -67,7 +67,7 @@ fi
 
 COMPANY_NAME="${COMPANY_NAME:-我的内容工厂}"
 CONTENT_DIRECTION="${CONTENT_DIRECTION:-连载小说}"
-TARGET_READER="${TARGET_READER:-待定（需通过 L0 战略层验证）}"
+TARGET_READER="${TARGET_READER:-待定（需通过 战略层验证）}"
 HYPOTHESIS="${HYPOTHESIS:-读者需要 ${CONTENT_DIRECTION} 类型的情绪驱动内容，有人愿意付费追更}"
 ADVANTAGE="${ADVANTAGE:-AI 辅助高产出 + 8 层闭环数据驱动优化}"
 PRODUCT_POSITIONING="${PRODUCT_POSITIONING:-用 AI 辅助生产高质量 ${CONTENT_DIRECTION} 内容，找到第一批付费读者}"
@@ -108,7 +108,7 @@ cat > "${CLAUDE_DIR}/memory/core/project-context.md" << EOF
 - **KR1**：完成 L0-L3 层设定，产出首部作品前 10 章（W4）
 - **KR2**：首部作品上线，完读率 > 40%（W6）
 - **KR3**：L5-L6 运营/商业方案落地，付费率 > 5%（W8）
-- **KR4**：L7 复盘闭环运转，至少 3 条技能优化上线（W12）
+- **KR4**：复盘闭环运转，至少 3 条技能优化上线（W12）
 
 ## 明确不做
 
@@ -128,14 +128,14 @@ cat > "${CLAUDE_DIR}/memory/core/project-context.md" << EOF
 
 | 团队 | 角色 | 调用 | 核心使命 |
 |------|------|------|----------|
-| L0 战略 | 主编 | @主编 | 决定写给谁、写什么、打什么情绪 |
-| L1 设定 | 设定师 | @设定师 | 构建世界观、人物、关系、风格 |
-| L2 剧本 | 编剧 | @编剧 | 设计故事、埋伏笔、设爆点、控节奏 |
-| L3 生产 | 写手 | @写手 | 场景、对话、章节、文风落地 |
-| L4 审稿 | 审稿 | @审稿 | 结构审查、情绪强化、一致性 |
-| L5 运营 | 运营 | @运营 | 读者转化、社群、留存、传播 |
-| L6 商务 | 商务 | @商务 | 会员、付费墙、产品化、IP运营 |
-| L7 复盘 | 复盘官 | @复盘官 | 反馈收集、复盘、技能优化、经验沉淀 |
+| 战略 | 主编 | @head-of-content | 决定写给谁、写什么、打什么情绪 |
+| 设定 | 设定师 | @world-builder | 构建世界观、人物、关系、风格 |
+| 剧本 | 编剧 | @story-architect | 设计故事、埋伏笔、设爆点、控节奏 |
+| 生产 | 写手 | @writer | 场景、对话、章节、文风落地 |
+| 审稿 | 审稿 | @reviewer | 结构审查、情绪强化、一致性 |
+| 运营 | 运营 | @operator | 读者转化、社群、留存、传播 |
+| 商务 | 商务 | @business | 会员、付费墙、产品化、IP运营 |
+| 复盘 | 复盘官 | @retro-officer | 反馈收集、复盘、技能优化、经验沉淀 |
 EOF
 echo "   ✅ project-context.md"
 
@@ -201,21 +201,21 @@ cat > "${CLAUDE_DIR}/memory/core/architecture.md" << EOF
 
 - **阶段**：0→1 创业期
 - **模式**：AI 辅助内容生产（人创意 + AI 执行 + 数据验证）
-- **核心约束**：8 层智能体闭环，L3 生产层优先 Agent 化
+- **核心约束**：8 层智能体闭环，生产层优先 Agent 化
 
 ## 内容工厂八层架构
 
 \`\`\`
-L0 战略层    ──→  L1 设定层    ──→  L2 剧本层    ──→  L3 生产层
+战略层    ──→  设定层    ──→  剧本层    ──→  生产层
 用户画像/选题      世界观/人物       故事/爆点/节奏     场景/对话/章节
-@主编              @设定师           @编剧              @写手
+@head-of-content              @world-builder           @story-architect              @writer
 
-L4 审稿层    ──→  L5 运营层    ──→  L6 商务层    ──→  L7 复盘层
+审稿层    ──→  运营层    ──→  商务层    ──→  复盘层
 结构/情绪/一致性    转化/社群/传播    会员/付费/IP运营    反馈/复盘/沉淀
-@审稿              @运营             @商务              @复盘官
+@reviewer              @operator             @business              @retro-officer
 
                                                     ↓ 反馈闭环
-                                              L0 主编 ← L7 复盘官
+                                              L0 主编 ← 复盘官
 \`\`\`
 
 ## ADR（Architecture Decision Records）
@@ -271,7 +271,7 @@ cat > "${CLAUDE_DIR}/blackboard/current-sprint.md" << 'EOF'
 ## 本期目标
 
 ```
-本期目标：[每期开始由 @主编 填写，对齐 OKR]
+本期目标：[每期开始由 @head-of-content 填写，对齐 OKR]
 成功标准：[完读率/付费率/追更率等可量化指标]
 内容预算：[本期计划产出章节数]
 ```
@@ -286,7 +286,7 @@ cat > "${CLAUDE_DIR}/blackboard/current-sprint.md" << 'EOF'
 
 | 日期 | 更新内容 | 更新者 |
 |------|----------|--------|
-| — | 初始化 | @主编 |
+| — | 初始化 | @head-of-content |
 EOF
 
 cat > "${CLAUDE_DIR}/blackboard/open-questions.md" << 'EOF'
@@ -398,8 +398,8 @@ echo "  📱 平台: ${PLATFORM}"
 echo ""
 echo "下一步："
 echo "  1. 启动 Claude Code"
-echo "  2. 输入 @主编 定义第一个内容选题和目标读者"
-echo "  3. 输入 @设定师 构建世界观和人物"
-echo "  4. 输入 @编剧 设计故事弧线"
+echo "  2. 输入 @head-of-content 定义第一个内容选题和目标读者"
+echo "  3. 输入 @world-builder 构建世界观和人物"
+echo "  4. 输入 @story-architect 设计故事弧线"
 echo ""
 echo "随时可以修改 .claude/memory/core/ 下的文件更新工厂信息。"

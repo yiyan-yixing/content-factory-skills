@@ -1,5 +1,5 @@
 ---
-name: "Content Page Compose / 页面排版"
+name: "content-page-compose"
 description: "生成公众号图文排版HTML和着陆页HTML，文章+配图自动排版。当用户说'页面排版''公众号排版''landing page''着陆页''HTML页面'时触发。"
 when_to_use: "需要生成完整页面排版时；用户说'公众号排版''landing page''着陆页''HTML页面''图文排版'时触发。频次：on-demand，时间盒：15min"
 allowed-tools:

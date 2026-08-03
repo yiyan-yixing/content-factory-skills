@@ -157,7 +157,7 @@ cat > .claude/blackboard/startup-plan.md <<EOF
 
 - [ ] 注册/完善 5 大平台账号
 - [ ] 安装 5118（SEO 验证）+ 壹伴（公众号排版）
-- [ ] 用 @主编 做第一个 SEO 选题验证
+- [ ] 用 @head-of-content 做第一个 SEO 选题验证
 - [ ] 跑通 L0→L4 全流程，产出第一篇长青文
 
 ## 第 2-4 周：内容积累
@@ -184,7 +184,7 @@ cat > .claude/blackboard/startup-plan.md <<EOF
 ## 每日 30 分钟流程
 
 \`\`\`
-08:00  @主编 SEO 验证选题（5分钟确认）
+08:00  @head-of-content SEO 验证选题（5分钟确认）
 08:05  L0-L4 全自动级联（AI 15 分钟）
 08:20  人工终审+发布（5 分钟）
 08:25  一鱼多吃分发确认（5 分钟）
@@ -200,7 +200,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "🚀 现在开始你的第一篇长青文："
 echo ""
 echo "  在 Claude Code 中输入："
-echo "  @主编 帮我验证一个选题：「$KEYWORDS」领域中最适合做长青文的关键词"
+echo "  @head-of-content 帮我验证一个选题：「$KEYWORDS」领域中最适合做长青文的关键词"
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""

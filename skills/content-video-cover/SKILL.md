@@ -1,5 +1,5 @@
 ---
-name: "Content Video Cover / 视频封面帧"
+name: "content-video-cover"
 description: "从视频中提取关键帧或合成视频封面帧。当用户说'视频封面''封面帧''thumbnail''视频封面图'时触发。"
 when_to_use: "需要生成视频封面帧时；用户说'视频封面''封面帧''thumbnail''视频封面图'时触发。频次：on-demand，时间盒：5min"
 allowed-tools:

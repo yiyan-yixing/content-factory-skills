@@ -30,13 +30,13 @@
 
 ## 技能路由
 
-- 选题验证 → @主编 + 5118 API
-- 长青文写作 → @写手 SKILL-303
+- 选题验证 → @head-of-content + 5118 API
+- 长青文写作 → @writer SKILL-303
 - 跨平台改写 → 5118 智能改写 API / KAWO Auto-Format
-- 付费专栏设计 → @商务 SKILL-601/602
-- 带货选品 → @运营 SKILL-501 + 抖音精选联盟/小红书蒲公英
-- 数字产品打包 → @商务 SKILL-603 + 面包多
-- 搜索排名追踪 → @复盘官 SKILL-701 + 5118 排名监控
+- 付费专栏设计 → @business SKILL-601/602
+- 带货选品 → @operator SKILL-501 + 抖音精选联盟/小红书蒲公英
+- 数字产品打包 → @business SKILL-603 + 面包多
+- 搜索排名追踪 → @retro-officer SKILL-701 + 5118 排名监控
 
 ## 完整方案参考
 

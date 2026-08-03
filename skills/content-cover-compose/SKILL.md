@@ -1,5 +1,5 @@
 ---
-name: "Content Cover Compose / 封面图合成"
+name: "content-cover-compose"
 description: "用Pillow将数据图/插图+文字叠加合成为品牌封面图，支持小红书3:4和公众号封面。当用户说'合成封面''compose cover''文字叠加''封面合成'时触发。"
 when_to_use: "需要合成封面图时；用户说'做封面图''合成封面''compose cover''文字叠加''封面生成'时触发。频次：on-demand，时间盒：10min"
 allowed-tools:

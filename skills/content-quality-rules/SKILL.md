@@ -1,5 +1,5 @@
 ---
-name: "Content Quality Rules / 内容质量铁律"
+name: "content-quality-rules"
 description: "从27篇阿里云开发者爆款文章提炼的标题/类比/判断句/结构铁律。当用户说'写标题''生成标题''文章质量''内容打磨''加类比''判断句'时触发。"
 when_to_use: "需要生成高质量标题、给文章加类比/判断句/对比句、检查内容质量时触发。频次：on-demand，时间盒：5min"
 allowed-tools:

@@ -1,5 +1,5 @@
 ---
-name: "Content Travel Writing / 旅行写作"
+name: "content-travel-writing"
 description: "将旅行规划数据（行程/预算/攻略/拍摄记录）转化为可发布的旅行文章。适合小红书种草、公众号深度、X Thread、朋友圈等场景。"
 when_to_use: "需要写旅行攻略/游记时；用户说'写游记''写攻略''写一篇关于X的旅行文章''记录这次旅行'时触发。频次：on-demand，时间盒：30min"
 allowed-tools:

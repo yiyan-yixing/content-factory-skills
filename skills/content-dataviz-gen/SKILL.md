@@ -1,5 +1,5 @@
 ---
-name: "Content DataViz Gen / 数据可视化生成"
+name: "content-dataviz-gen"
 description: "用matplotlib脚本化生成数据可视化图，品牌色板统一。当用户说'数据图''图表''数据可视化''dataviz''matplotlib出图'时触发。"
 when_to_use: "需要生成数据可视化图时；用户说'做数据图''画图表''数据可视化''matplotlib'时触发。频次：on-demand，时间盒：15min"
 allowed-tools:
