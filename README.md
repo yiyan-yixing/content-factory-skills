@@ -373,7 +373,7 @@ SKILL-701 ──→ SKILL-702 ──→ SKILL-703 ──→ SKILL-704
 
 ## License
 
-CC BY-SA 4.0 — 欢迎借鉴，请注明出处
+MIT License — 欢迎借鉴，请注明出处（见 [LICENSE](./LICENSE)）
 
 ## 版本
 
