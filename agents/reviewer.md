@@ -317,8 +317,11 @@ ArticleDraft + PlatformVersion[] + TopicBrief
    ├─ 子任务R3: 金句+判断句审查 ──→ SentenceReport（SKILL-361）
    │     (输入: 类比审查后的文章)
    │
-   └─ 子任务R4: 平台合规审查 ──→ PlatformComplianceReport（SKILL-362）
-         (输入: 金句审查后的文章 + 各平台版本)
+   ├─ 子任务R4: 平台合规审查 ──→ PlatformComplianceReport（SKILL-362）
+   │     (输入: 金句审查后的文章 + 各平台版本)
+   │
+   └─ 子任务R5: 品牌视觉合规审查 ──→ BrandComplianceReport（audit_brand.py）
+         (输入: 平台合规后的文章 + 配图/卡片/HTML 产出文件)
         ↓
    综合判定 → Go/No-Go → 交付给 operator 运营
 ```
@@ -406,13 +409,32 @@ PlatformVersion[]: {各平台版本}
 - 输出格式: PlatformComplianceReport (JSON)
 ```
 
+### 子任务 R5：品牌视觉合规审查
+
+```
+请开一个新的子任务（subagent）来做品牌视觉合规审查，
+子任务的职责是：用「一言出品」视觉规范（corp/brand/brand-visual-spec.md + tokens/visual-tokens.json）审查所有视觉产出（配图/卡片/HTML 落地页/视频封面帧）是否合规。
+需要审查的数据：
+
+平台合规后的文章: {文本}
+VisualOutputs[]: {配图/卡片/HTML 产出文件路径列表}
+
+审查要求：
+- 运行 `python3 content/scripts/audit_brand.py <各产出文件>` 逐一检查
+- error 项（非品牌色值 / 缺水印）→ P0/P1，必须修复后发布
+- warn 项（deprecated 第二套色值 / 疑似缺品牌框）→ P2 记录，存量豁免文件除外
+- 人工核对：品牌框是否左上（navy 底 + 金边 + 8px 圆角）？主标题是否 ≤12 字？水印是否右下 0.6 不透明度？
+- 4 层信息架构是否完整（tag → headline → 数据锚 → 金句）？数据锚是否由数据源生成（禁止 LLM 手写数字）？
+- 输出格式: BrandComplianceReport (JSON)，含 error/warn 清单与修复建议
+```
+
 ### 技术文章审稿判定标准
 
 | 等级 | 条件 | 动作 |
 |------|------|------|
-| **Go** | 8项全✅ + 类比/判断句/金句密度达标 + 平台合规 | 级联到 operator 运营 |
-| **Conditional Go** | 8项中1-2项⚠️ + 核心密度达标 + 平台合规 | 自动修复⚠️项后级联到 operator |
-| **No-Go** | 8项中≥3项⚠️/❌ 或 核心密度不达标 或 平台不合规 | 打回 writer 写手，附修复清单 |
+| **Go** | 8项全✅ + 类比/判断句/金句密度达标 + 平台合规 + 品牌视觉合规（audit error=0） | 级联到 operator 运营 |
+| **Conditional Go** | 8项中1-2项⚠️ + 核心密度达标 + 平台合规 + 品牌视觉合规 | 自动修复⚠️项后级联到 operator |
+| **No-Go** | 8项中≥3项⚠️/❌ 或 核心密度不达标 或 平台不合规 或 品牌 audit 有 error | 打回 writer 写手，附修复清单 |
 
 ### 技术文章审稿报告格式
 
@@ -437,6 +459,12 @@ PlatformVersion[]: {各平台版本}
   公众号：✅/❌ [不合规项]
   ...
 
+品牌视觉合规（audit_brand.py）：
+  audit：error=[N] warn=[N] [违规文件列表]
+  品牌框：✅/❌ [缺失位置]
+  水印：✅/❌ [缺失位置]
+  4层架构：✅/❌ [缺失层]
+
 判定：Go / Conditional Go / No-Go
 修复清单（No-Go时）：[具体修复项]
 ```
@@ -459,3 +487,4 @@ PlatformVersion[]: {各平台版本}
 - **tech**：质量铁律/类比/金句/平台合规（SKILL-357 质量规则）
 - **novel**：结构/情绪/节奏/一致性
 - **xhs/video/drama**：钩子/合规/完播率
+- **品牌视觉合规（全品类·含视觉产出时）**：audit_brand.py error → 阻断；规范见 `corp/brand/brand-visual-spec.md`
